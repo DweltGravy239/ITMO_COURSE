@@ -19,4 +19,6 @@
 <img width="1206" height="406" alt="image" src="https://github.com/user-attachments/assets/7aa5b57f-5ee7-4f27-b56d-85258640a646" />
 Проверяем, что наш helm применился:
 <img width="1388" height="554" alt="image" src="https://github.com/user-attachments/assets/a4ab3838-2b4c-4408-be0c-177fb8ce551c" />
+Теперь переходим к установке и настройке prometheus. Скачиваем helm с prometheus 
+<img width="2850" height="1374" alt="image" src="https://github.com/user-attachments/assets/6ec54460-5e55-44f6-909f-d82e50ea9ee7" />
 
