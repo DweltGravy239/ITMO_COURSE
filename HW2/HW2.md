@@ -19,6 +19,7 @@
 <img width="1206" height="406" alt="image" src="https://github.com/user-attachments/assets/7aa5b57f-5ee7-4f27-b56d-85258640a646" />
 Проверяем, что наш helm применился:
 <img width="1388" height="554" alt="image" src="https://github.com/user-attachments/assets/a4ab3838-2b4c-4408-be0c-177fb8ce551c" />
+Часть 1. Установка Prometheus и Grafana
 Теперь переходим к установке и настройке prometheus. Скачиваем helm с prometheus 
 <img width="2850" height="1374" alt="image" src="https://github.com/user-attachments/assets/6ec54460-5e55-44f6-909f-d82e50ea9ee7" />
 Проверим, что все поднялось успешно
@@ -37,5 +38,26 @@
 <img width="1882" height="504" alt="image" src="https://github.com/user-attachments/assets/9675797f-1b51-4215-aef2-95afc073f25c" />
 Вытаскиваем пароль от админской учетки и пробуем зайти в графану:
 <img width="2880" height="1024" alt="image" src="https://github.com/user-attachments/assets/80aee688-1603-488e-9d05-c9352592a681" />
+Для того, чтоб каждый раз не прописывать источник в графане, пропишет его сразу же в конфигурациях:
+<img width="1220" height="466" alt="image" src="https://github.com/user-attachments/assets/e44241dc-c02e-4916-9e75-1e673235ca77" />
+Применим изменения:
+<img width="2868" height="1070" alt="image" src="https://github.com/user-attachments/assets/bec3962c-7995-4060-b98d-8933e9e43667" />
+Проверим в графане, что все отработало корректно:
+<img width="2260" height="730" alt="image" src="https://github.com/user-attachments/assets/dab9b459-c3ef-427f-b0f0-65d092f16632" />
+Проверяем, что графики отображаются корректно(для этого построим график)
+<img width="2200" height="1120" alt="image" src="https://github.com/user-attachments/assets/42aa34b7-4fcc-4aa7-8c58-82a95dce1e44" />
+Теперь сохраняем наш дашборд
+<img width="1482" height="1316" alt="image" src="https://github.com/user-attachments/assets/13b2a003-491d-4bef-afc6-aa96e5ffcef5" />
+Загрузим через kubectl:
+<img width="2224" height="192" alt="image" src="https://github.com/user-attachments/assets/9942fc06-030c-44bc-8070-73da7f0a435d" />
+Теперь пропишем в values, чтоб сразу же загружать информацию о дашборде в графану:
+<img width="1084" height="924" alt="image" src="https://github.com/user-attachments/assets/e0e103ed-a94b-400f-899f-8c287d347b3c" />
+Сохраним изменения:
+<img width="2860" height="1168" alt="image" src="https://github.com/user-attachments/assets/c63866d0-32c3-45ca-a4a1-55ae88594e25" />
+Проверим, что графана сразу же отображает дашборд:
+<img width="2262" height="1058" alt="image" src="https://github.com/user-attachments/assets/ff3c246a-326d-44d2-aa8c-a6e2aa063091" />
+Часть 2. Установка Loki
+
+
 
 
