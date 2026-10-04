@@ -21,4 +21,21 @@
 <img width="1388" height="554" alt="image" src="https://github.com/user-attachments/assets/a4ab3838-2b4c-4408-be0c-177fb8ce551c" />
 Теперь переходим к установке и настройке prometheus. Скачиваем helm с prometheus 
 <img width="2850" height="1374" alt="image" src="https://github.com/user-attachments/assets/6ec54460-5e55-44f6-909f-d82e50ea9ee7" />
+Проверим, что все поднялось успешно
+<img width="1704" height="504" alt="image" src="https://github.com/user-attachments/assets/9bc58735-bf28-4c0b-9e57-5a24fd3fdf2e" />
+Теперь настроим отправку логов на prometheus с нашего веб приложения:
+<img width="1520" height="1068" alt="image" src="https://github.com/user-attachments/assets/3ee9d614-e244-4ea3-9db9-f6bfce7df145" />
+Применяем изменения:
+<img width="1726" height="406" alt="image" src="https://github.com/user-attachments/assets/623d81b2-2268-4b23-b682-b6fcdd67c8d4" />
+Проверим, что все работает:
+<img width="2880" height="806" alt="image" src="https://github.com/user-attachments/assets/50c3de4f-bba9-4dcb-a712-8d5b7e5231b5" />
+Теперь ставим графану, также через helm:
+<img width="2092" height="322" alt="image" src="https://github.com/user-attachments/assets/5c9b23ea-1cc1-4c27-97d1-824b6348d932" />
+Установим графану:
+<img width="2866" height="1100" alt="image" src="https://github.com/user-attachments/assets/e2b28730-5d8e-4e6a-892b-0f32817333d7" />
+Проверим, что все работает корректно:
+<img width="1882" height="504" alt="image" src="https://github.com/user-attachments/assets/9675797f-1b51-4215-aef2-95afc073f25c" />
+Вытаскиваем пароль от админской учетки и пробуем зайти в графану:
+<img width="2880" height="1024" alt="image" src="https://github.com/user-attachments/assets/80aee688-1603-488e-9d05-c9352592a681" />
+
 
