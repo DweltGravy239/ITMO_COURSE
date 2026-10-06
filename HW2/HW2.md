@@ -57,6 +57,21 @@
 Проверим, что графана сразу же отображает дашборд:
 <img width="2262" height="1058" alt="image" src="https://github.com/user-attachments/assets/ff3c246a-326d-44d2-aa8c-a6e2aa063091" />
 Часть 2. Установка Loki
+Для установки локи настраиваем values для loki:
+<img width="610" height="1370" alt="image" src="https://github.com/user-attachments/assets/c918e96e-64e0-4700-a0d3-79411a9a7538" />
+После этого устанавливаем helm (его также возьмем из онлайн репозитория):
+<img width="2000" height="1014" alt="image" src="https://github.com/user-attachments/assets/35213781-2375-48d0-a008-69919362407b" />
+Проверим, что поды поднялись успешно:
+<img width="1806" height="546" alt="image" src="https://github.com/user-attachments/assets/0340d8f6-19ae-4bf3-8bde-ebd1862368fc" />
+Теперь начинаем ставить агентов, для них будем использовать grafana alloy. 
+Для того чтоб проверить, что все поднимается и отправляется корректно, напишем неполный values и попробуем запустить:
+<img width="1908" height="334" alt="image" src="https://github.com/user-attachments/assets/8391f5e8-4e80-4fd8-a061-bcf34ed0904e" />
+Установим helm:
+<img width="2050" height="382" alt="image" src="https://github.com/user-attachments/assets/534a8420-c882-4a96-903e-e4fbe26c5f99" />
+Проверим, что все отрабатывает корректно: 
+<img width="1808" height="550" alt="image" src="https://github.com/user-attachments/assets/a013aea9-db6f-446b-a943-a1ba3288bcee" />
+Теперь, когда мы убедились, что все отрабатывает корректно, мы добавим источник в наш конфиг:
+
 
 
 
