@@ -71,6 +71,23 @@
 Проверим, что все отрабатывает корректно: 
 <img width="1808" height="550" alt="image" src="https://github.com/user-attachments/assets/a013aea9-db6f-446b-a943-a1ba3288bcee" />
 Теперь, когда мы убедились, что все отрабатывает корректно, мы добавим источник в наш конфиг:
+<img width="1914" height="1386" alt="image" src="https://github.com/user-attachments/assets/a17bda5b-c1e1-4e3c-949d-0ea95e0be5da" />
+Применим изменения:
+<img width="1990" height="980" alt="image" src="https://github.com/user-attachments/assets/238553e9-b7f3-42ba-ab4d-2f6bc8d93326" />
+Проверим, что логи нормальные: 
+<img width="2878" height="1202" alt="image" src="https://github.com/user-attachments/assets/e28ec107-6019-47b6-bf8c-7cea6ce8a474" />
+Теперь добавим его как источник в графану и посмотрим, все ли он корректно выводит:
+<img width="2194" height="1028" alt="image" src="https://github.com/user-attachments/assets/ac6b9ab7-921a-4e64-aa57-ede9574d67ed" />
+<img width="2148" height="1172" alt="image" src="https://github.com/user-attachments/assets/e524a019-649d-44b5-a240-a8a145242937" />
+Осталось только отредактировать конфиг графаны, чтоб источник мы добавляли не руками, а он сразу был доступен:
+<img width="1152" height="1180" alt="image" src="https://github.com/user-attachments/assets/5e32fbdc-2dd8-40f8-887f-f239198b5636" />
+Обновим helm:
+<img width="2182" height="378" alt="image" src="https://github.com/user-attachments/assets/39eed7df-bb36-4540-b203-9f98873151a0" />
+Часть 3. Установка и настройка Jaeger
+Добавляем репозиторий jaeger и смотрим, какие версии там есть
+<img width="2068" height="580" alt="image" src="https://github.com/user-attachments/assets/598350f0-83a2-4dcd-b009-7bfd766d6d76" />
+Установим jaeger:
+<img width="2862" height="950" alt="image" src="https://github.com/user-attachments/assets/3edb08f4-fb43-447f-9f29-9819c042c48b" />
 
 
 
