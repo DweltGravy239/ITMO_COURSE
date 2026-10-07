@@ -1,4 +1,4 @@
-Лабораторная работа №2 - Observability
+<img width="2870" height="730" alt="image" src="https://github.com/user-attachments/assets/07bed5ea-b73d-4b04-8b02-4d134a21db89" />Лабораторная работа №2 - Observability
 Цель:
 Часть 0 - Создание своего сервиса.
 Для создания своего сервиса я воспользовался клодом. В итоге он мне сгенерировал что-то такое (более подробнее можно увидеть в каталоге /app):
@@ -88,6 +88,28 @@
 <img width="2068" height="580" alt="image" src="https://github.com/user-attachments/assets/598350f0-83a2-4dcd-b009-7bfd766d6d76" />
 Установим jaeger:
 <img width="2862" height="950" alt="image" src="https://github.com/user-attachments/assets/3edb08f4-fb43-447f-9f29-9819c042c48b" />
+Скорректируем наш helm приложения, чтоб отправлять логи сразу же джагеру:
+<img width="1518" height="908" alt="image" src="https://github.com/user-attachments/assets/a1d45ccb-be5a-43e5-90cf-d7955644f4d1" />
+Обновим хелм приложения:
+<img width="1314" height="772" alt="image" src="https://github.com/user-attachments/assets/8787cbbc-9fbc-489a-8a63-dd39f030bc16" />
+Проверим, что веб морда работает:
+<img width="1726" height="616" alt="image" src="https://github.com/user-attachments/assets/d4fe6b06-7336-42b1-806a-31418d298177" />
+<img width="2870" height="972" alt="image" src="https://github.com/user-attachments/assets/0714762f-8b04-4831-a610-7c86cc402db4" />
+Для проверки работоспособности, нагенерим трафик и проверим, появился ли он в jaeger:
+<img width="2880" height="346" alt="image" src="https://github.com/user-attachments/assets/68cd3abb-97ff-4486-85b4-c4aff81fefa4" />
+<img width="2130" height="446" alt="image" src="https://github.com/user-attachments/assets/8137ac55-d8ed-417f-861c-b9b537c6ce62" />
+Теперь проверим, что каждый статус нашего приложения отображается корректно:
+slow:
+<img width="2870" height="914" alt="image" src="https://github.com/user-attachments/assets/d0fa505c-9a9a-48fd-ab1d-e01b5c8d9f92" />
+error:
+<img width="2872" height="778" alt="image" src="https://github.com/user-attachments/assets/0cf19d64-98d0-48da-ac08-ad9c9f4e6ec6" />
+Теперь нам необходимо связать логи и трейсы. Делать мы это будем в графане:
+Проверим руками, существует ли какое-то событие в Loki, а потом поищем это событие в jaeger:
+<img width="2878" height="1284" alt="image" src="https://github.com/user-attachments/assets/cb9d137d-f49c-4b9f-afc1-c2bcae33a1af" />
+<img width="2870" height="730" alt="image" src="https://github.com/user-attachments/assets/e7852a66-24a8-40d2-905e-63a911275160" />
+Теперь сделаем так, чтоб графана знала о jaeger и при каждом логе в loki появлялась ссылка в jaeger:
+Скорректируем values у хелма для графаны:
+
 
 
 
