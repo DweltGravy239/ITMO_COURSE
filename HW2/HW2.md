@@ -109,6 +109,18 @@ error:
 <img width="2870" height="730" alt="image" src="https://github.com/user-attachments/assets/e7852a66-24a8-40d2-905e-63a911275160" />
 Теперь сделаем так, чтоб графана знала о jaeger и при каждом логе в loki появлялась ссылка в jaeger:
 Скорректируем values у хелма для графаны:
+<img width="1062" height="1386" alt="image" src="https://github.com/user-attachments/assets/5b7f895d-b06d-4c4d-8526-1b8d892e3ea0" />
+Выполним helm upgrade:
+<img width="2880" height="1136" alt="image" src="https://github.com/user-attachments/assets/2e352137-3faf-425f-9a18-4188cf2c78c9" />
+Проверим, что на дашборде все отрабатывает корректно и появилась ссылка на джагер:
+<img width="1064" height="710" alt="image" src="https://github.com/user-attachments/assets/dc52280d-5d35-4765-b2a5-474b0d69a966" />
+Теперь нажмем на ссылку и перейдем в джагер для просмотра трейса:
+<img width="1422" height="1212" alt="image" src="https://github.com/user-attachments/assets/5d0d6048-ed8f-4d44-a665-4c1cabdae247" />
+Часть 4. Алерты 
+Теперь настроим алерты, для этого мы скорректируем конфиг prometheus:
+
+
+
 
 
 
