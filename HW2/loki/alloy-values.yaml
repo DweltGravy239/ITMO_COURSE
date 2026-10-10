@@ -1,0 +1,50 @@
+alloy:
+  configMap:
+    create: true
+    content: |
+      discovery.kubernetes "metadata" {
+        role = "pod"
+      }
+      discovery.relabel "update_metadata" {
+        targets = discovery.kubernetes.metadata.targets
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          target_label  = "namespace"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          target_label  = "pod"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          target_label  = "container"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app"]
+          target_label  = "app"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
+          separator = "/"
+          replacement = "/var/log/pods/*$1/*.log"
+          target_label = "__path__"
+        }
+      }
+      local.file_match "update_metadata_v2" {
+        path_targets = discovery.relabel.update_metadata.output
+      }
+      loki.source.file "final_update_metadata" {
+        targets = local.file_match.update_metadata_v2.targets
+        forward_to = [loki.process.final_update_metadata_v2.receiver]
+      }
+      loki.process "final_update_metadata_v2" {
+        forward_to = [loki.write.to_loki.receiver]
+        stage.cri {}
+      }
+      loki.write "to_loki" {
+        endpoint {
+          url = "http://loki-gateway/loki/api/v1/push"
+        }
+      }
+  mounts:
+    varlog: true

@@ -1,0 +1,32 @@
+alertmanager:
+  enabled: true
+serverFiles:
+  alerting_rules.yml:
+    groups:
+      - name: api-alerts
+        rules:
+          - alert: ApiDown
+            expr: up{app="app-stage0-api"} == 0 or absent(up{app="app-stage0-api"})
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "API недоступен. Таргет не отвечает или подов нету"
+      - name: errors_for_5_minutes
+        rules:
+          - alert: TooMuch
+            expr: sum(rate(api_errors_total[5m])) / sum(rate(api_requests_total[5m])) >= 0.05
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "За последние 5 минут число ошибок привысело 5% от всех запросов"
+      - name: time_for_otvet
+        rules:
+          - alert: TooMuchTime 
+            expr: histogram_quantile(0.95, sum by (le) (rate(api_request_duration_seconds_bucket[5m]))) > 1.5
+            for: 1m 
+            labels:
+              severity: critical
+            annotations:
+              summary: "Время ответа на запрос привысило допустимый лимит"

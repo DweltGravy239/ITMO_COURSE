@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-api
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-api
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+      labels:
+        app: {{ .Release.Name }}-api
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-api
+          image: "{{ .Values.image.repository}}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: standard 
+              containerPort: 8000
+          env:
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.jaeger.value }} 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-api
+spec:
+  selector:
+    app: {{ .Release.Name }}-api
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8000

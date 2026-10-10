@@ -1,0 +1,3 @@
+
+env:
+  ALERTMANAGER_URI: "http://prometheus-alertmanager:9093"

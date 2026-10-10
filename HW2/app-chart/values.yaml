@@ -1,0 +1,9 @@
+image:
+  repository: api
+  tag: v3
+  pullPolicy: IfNotPresent
+replicaCount: 3
+service:
+  port: 8000
+jaeger:
+  value: http://jaeger:4317
