@@ -1,4 +1,4 @@
-<img width="2870" height="730" alt="image" src="https://github.com/user-attachments/assets/07bed5ea-b73d-4b04-8b02-4d134a21db89" />Лабораторная работа №2 - Observability
+<img width="2376" height="760" alt="image" src="https://github.com/user-attachments/assets/a9ef6827-d521-4a5c-92a5-444652e1074e" /><img width="2870" height="730" alt="image" src="https://github.com/user-attachments/assets/07bed5ea-b73d-4b04-8b02-4d134a21db89" />Лабораторная работа №2 - Observability
 Цель:
 Часть 0 - Создание своего сервиса.
 Для создания своего сервиса я воспользовался клодом. В итоге он мне сгенерировал что-то такое (более подробнее можно увидеть в каталоге /app):
@@ -118,6 +118,34 @@ error:
 <img width="1422" height="1212" alt="image" src="https://github.com/user-attachments/assets/5d0d6048-ed8f-4d44-a665-4c1cabdae247" />
 Часть 4. Алерты 
 Теперь настроим алерты, для этого мы скорректируем конфиг prometheus:
+<img width="780" height="654" alt="image" src="https://github.com/user-attachments/assets/469075a6-5b3f-4e1e-ae0d-2ae5e9ba959c" />
+Обновим конфигурации нашего хелма:
+<img width="2858" height="1144" alt="image" src="https://github.com/user-attachments/assets/9baf01f2-2545-4ad2-abde-afcf3ca344fb" />
+Теперь напишем конфиг для prometheus, чтоб указать, при каких моментах нужно присылать алерт:
+<img width="2342" height="1316" alt="image" src="https://github.com/user-attachments/assets/fe6c8fae-704c-49e4-8a6b-78976e9bb6c0" />
+Обновим хелм:
+<img width="2834" height="1244" alt="image" src="https://github.com/user-attachments/assets/60325ba9-5a9b-4f66-88c3-29d7072d147a" />
+Проверим, что все нормально загрузилось:
+<img width="2874" height="1024" alt="image" src="https://github.com/user-attachments/assets/c757c037-2bab-4eaf-af31-c3f8c1a93e66" />
+Теперь попробуем запустить curl заведомо алертный запрос и проверим алерт в prometheus:
+<img width="2880" height="1120" alt="image" src="https://github.com/user-attachments/assets/53509df5-bd0e-4dbe-b090-b8bfa8f3abca" />
+Теперь запустим алертменеджер и посмотрим алерты там:
+<img width="1468" height="570" alt="image" src="https://github.com/user-attachments/assets/6d46923b-4bd0-4321-80dd-3163c9fde6ed" />
+Теперь начнем устанавливать карму, чтоб был удобный вывод, настроим env файл:
+<img width="1152" height="106" alt="image" src="https://github.com/user-attachments/assets/c790382f-65d9-4bf7-a89e-72a1f6b0febf" />
+<img width="2870" height="514" alt="image" src="https://github.com/user-attachments/assets/48fb8146-294f-4297-8d7c-9ee2bf562274" />
+Проверим, что алерты отрабатывают корректно:
+<img width="998" height="576" alt="image" src="https://github.com/user-attachments/assets/a2f32caa-021b-4e27-8f3d-9cef3c5586be" />
+Проверим в алертменеджере, что алерты пришли:
+<img width="2376" height="760" alt="image" src="https://github.com/user-attachments/assets/6555c04d-8ffc-4b6c-9782-8cb3ddf60745" />
+Теперь уменьшим количество подов и проверим работоспособность алертов:
+<img width="1502" height="164" alt="image" src="https://github.com/user-attachments/assets/d88837a5-d419-4799-b43a-0d12e83d39a1" />
+Теперь смотрим в alertmanager и karma:
+<img width="1318" height="300" alt="image" src="https://github.com/user-attachments/assets/d574963f-1b7e-4077-a49e-83d1f9bc72c5" />
+<img width="998" height="334" alt="image" src="https://github.com/user-attachments/assets/ed639b89-a676-41af-8e25-13c96cd4ac51" />
+
+
+
 
 
 
