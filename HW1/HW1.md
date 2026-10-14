@@ -28,8 +28,19 @@
 <img width="2850" height="400" alt="image" src="https://github.com/user-attachments/assets/47775eac-dbcc-4554-a3c7-b8e5ae03837e" />
 Теперь выставим лимиты для CPU:
 <img width="2104" height="1112" alt="image" src="https://github.com/user-attachments/assets/6cb68927-c198-48ef-b788-37d80dabc9da" />
-
+Проверим, что все отрабатывает корректно:
+<img width="1950" height="698" alt="image" src="https://github.com/user-attachments/assets/14002214-240b-449c-9322-01a47b92d6d5" />
+Настроим максимальное количество потоков у нас в namespace и проверим результат:
+<img width="2190" height="408" alt="image" src="https://github.com/user-attachments/assets/0534e68c-7ba5-4154-8b8e-a5a7c90f4388" />
 Этап 4. Права capabilities и seccomp
+Для начала проверим текущие права у рута:
+<img width="2880" height="542" alt="image" src="https://github.com/user-attachments/assets/0140ab6e-5b66-407c-a4eb-011ca118452b" />
+Теперь попробуем поиграться с правами CAP_SYS_TIME и проверим, что права от окружения могут отличаться:
+<img width="2120" height="276" alt="image" src="https://github.com/user-attachments/assets/774d50c7-3f7a-4c3e-a0d8-52d5a6704868" />
+Проверим, какие системы вызовы разрешены процессу:
+<img width="1216" height="434" alt="image" src="https://github.com/user-attachments/assets/9452d786-e1f8-4b95-941c-51541d2fcc40" />
+Теперь приступим к написанию своего правила для режима BPF-фильтра:
+
 Этап 5. mydocker.sh и сравнение с docker run
 Этап 6. Образы
 Этап 7. gVisor
