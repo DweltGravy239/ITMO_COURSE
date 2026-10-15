@@ -47,8 +47,22 @@
 <img width="1546" height="334" alt="image" src="https://github.com/user-attachments/assets/345fbdfd-a4f8-4346-9023-af0ec369b2cf" />
 Проверим, что все работает:
 <img width="2404" height="216" alt="image" src="https://github.com/user-attachments/assets/612f8740-2d98-4bd8-a8bd-0f66be0cbc41" />
-
 Этап 5. mydocker.sh и сравнение с docker run
+Настало время создания скрипта mydocker.sh, для того чтоб в дальнейшем сравнить его с docker run
+Наш скрипт будет состоять из 7 этапов:
+- Создать cgroup
+- Записать себя в cgroup.procs
+- Запустить unshare
+- Выставить hostname
+- Сбросить capabilities
+- Наложить seccom[
+- Запустить веб приложение
+Попробуем выполнить первый этап, создать cgroup и записать себя в cgroup.procs:
+<img width="1384" height="800" alt="image" src="https://github.com/user-attachments/assets/50406e30-1e8f-48c7-a844-b575cb7ba120" />
+Для теста добавим проверку файлов memory.max и pids.max и запустим скрипт:
+<img width="1340" height="446" alt="image" src="https://github.com/user-attachments/assets/a694cdae-26c0-4fd4-9582-74add28d815c" />
+
+
 Этап 6. Образы
 Этап 7. gVisor
 Этап 8. Мониторинг
