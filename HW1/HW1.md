@@ -55,12 +55,25 @@
 - Запустить unshare
 - Выставить hostname
 - Сбросить capabilities
-- Наложить seccom[
+- Наложить seccomp (сделаем на последнем шаге)
 - Запустить веб приложение
 Попробуем выполнить первый этап, создать cgroup и записать себя в cgroup.procs:
 <img width="1384" height="800" alt="image" src="https://github.com/user-attachments/assets/50406e30-1e8f-48c7-a844-b575cb7ba120" />
 Для теста добавим проверку файлов memory.max и pids.max и запустим скрипт:
 <img width="1340" height="446" alt="image" src="https://github.com/user-attachments/assets/a694cdae-26c0-4fd4-9582-74add28d815c" />
+Добавим namespace и проверим, что все отрабатывает корректно:
+<img width="1784" height="1298" alt="image" src="https://github.com/user-attachments/assets/ccd8091d-d2e1-4cc4-99f9-f1d45d030f37" />
+Теперь сбросим capabilities и проверим возможность выполнения команд:
+<img width="2520" height="1156" alt="image" src="https://github.com/user-attachments/assets/be53796f-47f3-4b57-8564-270aab6c11a2" />
+Теперь запустим веб приложение
+<img width="2860" height="1222" alt="image" src="https://github.com/user-attachments/assets/93fd568a-fc26-44b2-881a-ef85f33ae16a" />
+Осталось только обернуть все в seccomp и процесс создания скрипта закончен:
+Скачаем питоновский модуль для создания обретки:
+<img width="1312" height="138" alt="image" src="https://github.com/user-attachments/assets/979121ca-b72e-4033-b1d9-5a6a679ebd0b" />
+Напишем обертку и проверим, что она отрабатывает. На mkdir выдает ошибку, а на другую команду, все хорошо:
+<img width="2712" height="544" alt="image" src="https://github.com/user-attachments/assets/9044aafa-527e-434c-a143-f7d93962cb03" />
+Теперь скорректируем наш скрипт, добавив нужные параметры, после чего проверим работоспособность:
+<img width="2846" height="1240" alt="image" src="https://github.com/user-attachments/assets/251c7847-dc04-41c1-b72b-932aa5be25c3" />
 
 
 Этап 6. Образы
