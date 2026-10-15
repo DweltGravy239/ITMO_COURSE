@@ -39,7 +39,14 @@
 <img width="2120" height="276" alt="image" src="https://github.com/user-attachments/assets/774d50c7-3f7a-4c3e-a0d8-52d5a6704868" />
 Проверим, какие системы вызовы разрешены процессу:
 <img width="1216" height="434" alt="image" src="https://github.com/user-attachments/assets/9452d786-e1f8-4b95-941c-51541d2fcc40" />
+Проверим, что докер автоматически настраивает seccomp в режиме BPF-фильтра:
+<img width="2164" height="532" alt="image" src="https://github.com/user-attachments/assets/7c57d441-e95f-4b3d-89cb-5a59efbf88af" />
+Проверим, какое название syscall у нас:
+<img width="1640" height="114" alt="image" src="https://github.com/user-attachments/assets/b4da9baf-d0c2-4a37-bf21-56a0504ac094" />
 Теперь приступим к написанию своего правила для режима BPF-фильтра:
+<img width="1546" height="334" alt="image" src="https://github.com/user-attachments/assets/345fbdfd-a4f8-4346-9023-af0ec369b2cf" />
+Проверим, что все работает:
+<img width="2404" height="216" alt="image" src="https://github.com/user-attachments/assets/612f8740-2d98-4bd8-a8bd-0f66be0cbc41" />
 
 Этап 5. mydocker.sh и сравнение с docker run
 Этап 6. Образы
