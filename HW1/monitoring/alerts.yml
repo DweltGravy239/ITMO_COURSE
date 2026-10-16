@@ -1,0 +1,24 @@
+groups:
+  - name: mon-alerts
+    rules:
+      - alert: memory
+        expr: ( container_memory_working_set_bytes{name="mon"} / container_spec_memory_limit_bytes{name="mon"} ) * 100 > 90
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          summary: Память заполнена на 90 проценто! 
+      - alert: cpu-trolling
+        expr: (rate(container_cpu_cfs_throttled_periods_total{name='mon'}[1m]) / rate(container_cpu_cfs_periods_total{name='mon'}[1m])) * 100 >= 98
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: CPU-троллинг заполнен на 100 в течении 1 минуты!
+      - alert: threads
+        expr: (container_threads{name="mon"} / container_threads_max{name="mon"}) * 100 > 45
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Потоки mon заполнены на {{ printf \"%.0f\" $value }}% от лимита (50)"
