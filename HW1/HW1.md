@@ -17,6 +17,7 @@
 <img width="2300" height="1028" alt="image" src="https://github.com/user-attachments/assets/4e2af098-a1e7-4071-b58f-fd6f4cf6a9ec" />
 Теперь запустим окружение, но не из под рута, а из под обычного пользователя:
 <img width="2876" height="522" alt="image" src="https://github.com/user-attachments/assets/ebc35589-47fb-4bd8-a64c-c98b2a5dfa90" />
+PID 1 внутри и другой PID на хосте, значит это один и тот же процесс в разных пространствах имён. Изолированы PID, сеть, hostname, IPC. Запуск не от рута показал, что для создания namespace нужны права
 Этап 3. Cgroups
 Теперь выделим лимиты на использование ресурсов нашей основной машины
 Для того чтоб мы могли прописать параметры memory.max, cpu.max, pids.max нам нужно будет включить параметр cgroup.subtree_control:
@@ -47,6 +48,7 @@
 <img width="1546" height="334" alt="image" src="https://github.com/user-attachments/assets/345fbdfd-a4f8-4346-9023-af0ec369b2cf" />
 Проверим, что все работает:
 <img width="2404" height="216" alt="image" src="https://github.com/user-attachments/assets/612f8740-2d98-4bd8-a8bd-0f66be0cbc41" />
+Сброс capabilities лишает процесс отдельных привилегий рута, а seccomp режет системные вызовы целиком. Docker применяет такой фильтр и набор прав по умолчанию сам.
 Этап 5. mydocker.sh и сравнение с docker run
 Настало время создания скрипта mydocker.sh, для того чтоб в дальнейшем сравнить его с docker run
 Наш скрипт будет состоять из 7 этапов:
@@ -138,4 +140,12 @@
 Итоговый вариант дашборда:
 <img width="2250" height="1194" alt="image" src="https://github.com/user-attachments/assets/61e508fb-d406-4b56-89c1-9485ad85977d" />
 Теперь осталось сделать алерты и можно заканчивать:
+Напишем правила для алертов:
+<img width="2316" height="1124" alt="image" src="https://github.com/user-attachments/assets/ed32f89e-db1e-4d72-a0b1-c0b75041a7dc" />
+Внесем изменения в конфиг прометеуса:
+<img width="2332" height="940" alt="image" src="https://github.com/user-attachments/assets/9bf8c297-ad0b-48fc-94b7-5426187e6b8d" />
+Проверим, что все 3 правила применились:
+<img width="2846" height="886" alt="image" src="https://github.com/user-attachments/assets/154065d1-0665-4dfd-ae93-bb13d16683a4" />
+Теперь попробуем нагрузить приложение, чтоб алерты сработали:
+<img width="2816" height="1216" alt="image" src="https://github.com/user-attachments/assets/ba44b291-d336-47f6-a0a4-8cd13a90b08d" />
 
