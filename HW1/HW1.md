@@ -103,5 +103,20 @@
 <img width="708" height="406" alt="image" src="https://github.com/user-attachments/assets/6f0bdcee-f4ab-4ebd-8af8-858c5e5f0a3d" />
 Теперь проверим, что gVisor отрабатывает корректно:
 <img width="1076" height="550" alt="image" src="https://github.com/user-attachments/assets/4100c9b9-e4b1-419b-b935-5da1ccb6ce6d" />
-
+Общим во всех случаев остается ядро и физическое устройство, хоть и gVisor создает фейковое пространство. Хоть gVisor уменьшает риск атаки из контейнера на целевой хост, что приложение общается с Sentry и ядро хоста видит только часть вызовов, но окончательно не снимает его. Для того чтоб на 100 процентов защитить свой целевой хост, нужно использовать специально выделенную виртуальную машину, чтоб дать каждому контейнеру свое гостевое ядро.
 Этап 8. Мониторинг
+Для начала определим метрики, которые мы будем собирать. Этими метриками будут:
+- Память (рабочий, относительно лимита) + события OOM_Kill
+- CPI (доля троттлированных периодов за окно)
+- Процессы (pids.current относительно явно заданного pids.max)
+Скачиваем образ cAdvisor:
+<img width="1402" height="402" alt="image" src="https://github.com/user-attachments/assets/dc6e60e4-947c-4bd7-a270-00a588d3a149" />
+Запускаем его в конейнере:
+<img width="2856" height="788" alt="image" src="https://github.com/user-attachments/assets/e64f57ab-91e0-4f76-95ef-11e08da785e4" />
+Данному контейнеру выдает права читать корень, каталог cgroup, данные докер. 
+Теперь посмотрим, какие метрики собирает cAdvisor:
+<img width="2860" height="316" alt="image" src="https://github.com/user-attachments/assets/4041b0d5-53a7-424a-bdfc-eccda953f71b" />
+Для того чтоб prometheus нашел cAdvisor, мы поднимем сеть
+<img width="1326" height="276" alt="image" src="https://github.com/user-attachments/assets/63a2d04a-bf53-49af-94fd-59489c042c04" />
+Теперь напишем конфиг для prometheus:
+
