@@ -118,5 +118,24 @@
 <img width="2860" height="316" alt="image" src="https://github.com/user-attachments/assets/4041b0d5-53a7-424a-bdfc-eccda953f71b" />
 Для того чтоб prometheus нашел cAdvisor, мы поднимем сеть
 <img width="1326" height="276" alt="image" src="https://github.com/user-attachments/assets/63a2d04a-bf53-49af-94fd-59489c042c04" />
-Теперь напишем конфиг для prometheus:
+Теперь напишем базовый конфиг для prometheus:
+<img width="422" height="226" alt="image" src="https://github.com/user-attachments/assets/04328f06-d1e9-48f5-9d4a-e03439f51b09" />
+Теперь запустим прометеус:
+<img width="2850" height="1206" alt="image" src="https://github.com/user-attachments/assets/5657c771-ca4d-467d-868c-61fc8a4b0bd2" />
+Прометеус поднялся, осталось запустить графану, чтоб на дашборде выводить нужные показатели:
+<img width="2830" height="1250" alt="image" src="https://github.com/user-attachments/assets/5548481f-d7d4-4c9f-a779-6e4b26bdeaa7" />
+Проверим, что графана открылась:
+<img width="2870" height="1270" alt="image" src="https://github.com/user-attachments/assets/51632477-7064-4ae9-9f1d-c6ac5b14cc43" />
+Теперь сделаем дашборд с метриками, которыми мы обозначили выше:
+Набросам первую метрику в PromQL и проверим, что она отрабатывает корректно:
+<img width="2530" height="1460" alt="image" src="https://github.com/user-attachments/assets/0c1be43d-b5ab-4ff3-abc3-84d5c9f7c553" />
+Теперь вторую:
+<img width="2396" height="1350" alt="image" src="https://github.com/user-attachments/assets/c2aeec45-b445-4112-b1ee-0c1daf871616" />
+Осталось третье:
+<img width="2222" height="1276" alt="image" src="https://github.com/user-attachments/assets/91be2352-c53b-4d5d-92bb-308d29607983" />
+Теперь посмотрим наш общий дашборд под нагрузкой:
+<img width="2136" height="1206" alt="image" src="https://github.com/user-attachments/assets/eaaa8272-d3c9-4575-9ecd-b4c1e1a674a8" />
+Итоговый вариант дашборда:
+<img width="2250" height="1194" alt="image" src="https://github.com/user-attachments/assets/61e508fb-d406-4b56-89c1-9485ad85977d" />
+Теперь осталось сделать алерты и можно заканчивать:
 
