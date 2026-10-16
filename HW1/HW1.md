@@ -92,7 +92,16 @@
 Теперь попробуем записать какой-то файл в контейнер и пересоздать его:
 <img width="1446" height="246" alt="image" src="https://github.com/user-attachments/assets/158d816a-fcd3-4c08-bab5-afbbd034c36e" />
 Теперь попробуем провести подобный эксперемент, но только используя том:
-
-
+<img width="1428" height="522" alt="image" src="https://github.com/user-attachments/assets/49a82b77-9dc3-4cab-83ab-529be7aaeb79" />
+Мы можем наблюдать, что топ создался у нас локально и поэтому при создание/удаление контейнера у нас никаких проблем не возникло и данные сохранились. 
 Этап 7. gVisor
+Скачиваем gVisor:
+<img width="2878" height="838" alt="image" src="https://github.com/user-attachments/assets/4a28f39a-9fc9-4cdf-b031-906490cc2d11" />
+Распакуем архив и проверим, что все отрабатываем корректно и установка прошла успешно:
+<img width="1202" height="340" alt="image" src="https://github.com/user-attachments/assets/2151f506-56da-4b8a-bad5-f154e48f8ff1" />
+Зарегистрируем рантайм:
+<img width="708" height="406" alt="image" src="https://github.com/user-attachments/assets/6f0bdcee-f4ab-4ebd-8af8-858c5e5f0a3d" />
+Теперь проверим, что gVisor отрабатывает корректно:
+<img width="1076" height="550" alt="image" src="https://github.com/user-attachments/assets/4100c9b9-e4b1-419b-b935-5da1ccb6ce6d" />
+
 Этап 8. Мониторинг
