@@ -58,6 +58,39 @@
 Также выводим правила:
 <img width="2855" height="990" alt="image" src="https://github.com/user-attachments/assets/c3fa2aaa-ec52-4224-8e01-f1e10398b1c2" />
 Часть 2 — Чарт api и worker
+Загружаем наши образы в kind:
+<img width="2847" height="930" alt="image" src="https://github.com/user-attachments/assets/f48e07eb-5c1e-47cb-af63-84d0d37d520e" />
+Сделаем каркас для helm:
+<img width="1564" height="779" alt="image" src="https://github.com/user-attachments/assets/c87cd724-e652-4c2c-9d63-393061ccef36" />
+Для создания хелма, сначала сделаем обычный манифест, который потом переделаем в хелм:
+<img width="1293" height="1392" alt="image" src="https://github.com/user-attachments/assets/07ad9191-dc5a-4ee6-ac28-dddc0f160dd7" />
+Добавим values и скорректируем наш манифест:
+<img width="1052" height="1328" alt="image" src="https://github.com/user-attachments/assets/5c8dbc65-f549-4b1d-9b9d-59aa9ba23b23" />
+Проверим, что все отрабатывает корректно:
+<img width="692" height="966" alt="image" src="https://github.com/user-attachments/assets/70df51ec-dacd-4567-97b9-236079c0a577" />
+Добавим еще парочку параметров и проверим, что все отрабатывает корректно:
+<img width="738" height="1274" alt="image" src="https://github.com/user-attachments/assets/f1a540c8-fd7d-4e7e-afa6-6180420db0c4" />
+Теперь создадим хелм для worker и проверим его:
+<img width="414" height="1226" alt="image" src="https://github.com/user-attachments/assets/5a8b09b2-e8b1-4a45-989b-891a0f222f7a" />
+Установим чарты:
+<img width="2118" height="1029" alt="image" src="https://github.com/user-attachments/assets/cc06d839-6916-408a-9fde-d195c1579ee1" />
+Попробуем удалить под и проверим, что он пересоздаться:
+<img width="1641" height="618" alt="image" src="https://github.com/user-attachments/assets/10ab00ce-1912-4786-8061-b949ed4b2684" />
+Теперь попробуем сделать обновление нашего образа:
+<img width="2878" height="356" alt="image" src="https://github.com/user-attachments/assets/0f38dde8-ce01-44e7-9135-059286589212" />
+Теперь обновим наш хелм, для только чтоб сделать успешный rollingupdate:
+<img width="768" height="408" alt="image" src="https://github.com/user-attachments/assets/eadf3cb7-9412-4ff5-9fa2-53690e6ac90e" />
+Загрузим в кубер новый образ, для того чтоб в дальнейшем сгенерировать нагрузку:
+<img width="1914" height="226" alt="image" src="https://github.com/user-attachments/assets/36531815-0959-478e-8976-b46ce4e55410" />
+Запустим нагрузку на наши поды и пробуем провести плановое обновление:
+<img width="2734" height="1360" alt="image" src="https://github.com/user-attachments/assets/b2302e94-ebd1-4e4e-b108-8491856f552c" />
+Теперь пробуем сделать ошибку при раскатке
+Даем нагрузку и пытаемся сделать заведомо плохую раскатку:
+<img width="2880" height="1408" alt="image" src="https://github.com/user-attachments/assets/3650b479-2ce3-4bdf-860e-ee87ce24527c" />
+Мы видим, что даже при ошибке в развертывание, хелм не дал нам обновится и нагрузка на наше приложение не переключилось на сломанные ноды
+Делаем ролбек:
+<img width="2244" height="630" alt="image" src="https://github.com/user-attachments/assets/1c555f96-4385-4943-b7e6-0ac3465455d7" />
+
 Часть 3 — Postgres через оператора
 Часть 4 — Падение control plane
 Часть 5 — Мониторинг
