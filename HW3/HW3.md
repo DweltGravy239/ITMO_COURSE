@@ -90,7 +90,13 @@
 Мы видим, что даже при ошибке в развертывание, хелм не дал нам обновится и нагрузка на наше приложение не переключилось на сломанные ноды
 Делаем ролбек:
 <img width="2244" height="630" alt="image" src="https://github.com/user-attachments/assets/1c555f96-4385-4943-b7e6-0ac3465455d7" />
-
 Часть 3 — Postgres через оператора
+Поставим оператор и добавим репозиторий чарта CloudNativePG:
+<img width="1610" height="1254" alt="image" src="https://github.com/user-attachments/assets/c27321f7-75e1-4b09-9252-57c83856c9c5" />
+Напишем хелм для базы данных:
+<img width="914" height="802" alt="image" src="https://github.com/user-attachments/assets/dfa6932d-09eb-4057-a210-6158ee1573f4" />
+Применим изменения:
+<img width="1052" height="616" alt="image" src="https://github.com/user-attachments/assets/a3f99c43-b5c9-43af-8172-561d4369ac69" />
+
 Часть 4 — Падение control plane
 Часть 5 — Мониторинг
