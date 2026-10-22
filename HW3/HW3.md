@@ -128,4 +128,5 @@ controller-manager это встроенная часть кубера. Он с�
 <img width="1496" height="1408" alt="image" src="https://github.com/user-attachments/assets/1384dc97-60f6-4d60-9fbb-82b646bfad1d" />
 Применим изменения:
 <img width="2864" height="1376" alt="image" src="https://github.com/user-attachments/assets/56f59d45-5666-4a4a-b38b-d2b199543ed9" />
+Изменим уже существующие values и пропишем мониторинг:
 
