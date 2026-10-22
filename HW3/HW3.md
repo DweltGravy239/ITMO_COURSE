@@ -97,6 +97,35 @@
 <img width="914" height="802" alt="image" src="https://github.com/user-attachments/assets/dfa6932d-09eb-4057-a210-6158ee1573f4" />
 Применим изменения:
 <img width="1052" height="616" alt="image" src="https://github.com/user-attachments/assets/a3f99c43-b5c9-43af-8172-561d4369ac69" />
-
+Проверим, что все отрабатывает корректно и поды создались:
+<img width="1246" height="356" alt="image" src="https://github.com/user-attachments/assets/df3345ec-d402-4f54-bcab-ce8608cdce13" />
+Подключаем наше приложение к новосозданной базе данных:
+<img width="1161" height="1226" alt="image" src="https://github.com/user-attachments/assets/e2f83713-da6f-41be-808b-2c6dd0c4b870" />
+Проверяем, что все отрабатывает корректно:
+<img width="1716" height="906" alt="image" src="https://github.com/user-attachments/assets/be0804c7-9204-479d-8eb1-b72e050d0658" />
+Теперь попробуем удалить один из подов БД:
+<img width="2012" height="940" alt="image" src="https://github.com/user-attachments/assets/6dd8c037-fd10-499f-aaba-0ea9b8793e37" />
+Как мы видим, все отработало корректно.
+Теперь попробуем убить primary ноду:
+<img width="2057" height="497" alt="image" src="https://github.com/user-attachments/assets/48f15e75-cae8-48d9-839c-5d0c213e29a5" />
+Видим, что primary нода поменялась и все отработало корректно.
+Найдем spec и status:
+<img width="1248" height="195" alt="image" src="https://github.com/user-attachments/assets/9f67156d-cd6a-412c-a37b-2f693cbfc294" />
+controller-manager это встроенная часть кубера. Он следит только за обычными объектами вроде деплоев и умеет простые вещи, например удалиять или добавлять поды. Оператор CloudNativePG работает примерно также, но он разбирается именно в PostgreSQL, это было видно, когда у нас упала база и он автоматически переключил ее на другую. 
 Часть 4 — Падение control plane
+Проверим исходное состояние нашего кубера:
+<img width="1254" height="192" alt="image" src="https://github.com/user-attachments/assets/78515edb-da85-4815-abbe-dbb62e76dca9" />
+Остановим control plane. Убивать его мы будем через перенос манифестов в другую папку. Для начала создадим эту папку и перенесем туда все:
+<img width="1256" height="168" alt="image" src="https://github.com/user-attachments/assets/e9961740-0654-4199-be41-6d3bf066931e" />
+Проверим, что все контейнеры остановились и проверим, что мы ничего не можем сделать:
+<img width="1260" height="242" alt="image" src="https://github.com/user-attachments/assets/9cc3c0e1-a224-4997-a21a-aca23329ee29" />
+Теперь проверим, что контейнеры и приложение все равно живут без control plane:
+<img width="1262" height="460" alt="image" src="https://github.com/user-attachments/assets/3807b77f-f254-4171-b524-2baef84e0ce8" />
+Восстановим control plane и проверим это:
+<img width="1268" height="552" alt="image" src="https://github.com/user-attachments/assets/c9fc589a-fec3-42f7-8d0a-23d48e12f6cd" />
 Часть 5 — Мониторинг
+Подготовим новый values для нашего хелма, а именно отключим ненужные фитчи:
+<img width="1496" height="1408" alt="image" src="https://github.com/user-attachments/assets/1384dc97-60f6-4d60-9fbb-82b646bfad1d" />
+Применим изменения:
+<img width="2864" height="1376" alt="image" src="https://github.com/user-attachments/assets/56f59d45-5666-4a4a-b38b-d2b199543ed9" />
+
