@@ -1,0 +1,18 @@
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: run-as-non-root
+spec:
+  validationActions: ["Deny"]
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ['']
+        apiVersions: ['v1']
+        operations: ['CREATE']
+        resources: ['pods']
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: shop
+  validations:
+    - expression: "object.spec.containers.all(image, has(image.securityContext) && has(image.securityContext.runAsNonRoot) && image.securityContext.runAsNonRoot)"
+      message: "Контейнер запущен не от рута!"

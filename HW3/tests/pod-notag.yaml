@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-no-correct-end-image
+spec:
+  containers:
+    - name: myapp
+      image: registry.local/shop-api:0.1.0
+      imagePullPolicy: IfNotPresent
+      resources:
+        limits:
+          memory: 128Mi 

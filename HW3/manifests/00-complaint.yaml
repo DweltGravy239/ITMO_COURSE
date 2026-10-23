@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: 00-complaint
+  labels:
+    app: shop-api
+    owner: team-a
+spec:
+  containers:
+    - name: myapp
+      image: registry.local/shop-api:0.1.0
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        runAsNonRoot: true
+      resources:
+        limits:
+          memory: 128Mi 

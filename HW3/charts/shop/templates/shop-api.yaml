@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-api
+  labels:
+    app: shop-api
+    owner: team-a
+spec:
+  selector:
+    matchLabels:
+      app: shop-api
+  replicas: {{ .Values.api.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: shop-api
+        owner: team-a
+    spec:
+      containers:
+        - name: myapp
+          image: {{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+          resources:
+            limits:
+              memory: 128Mi 
+          ports:
+            - name: standard
+              containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: shop-db-app
+                  key: uri
+            - name: PORT
+              value: "8080"
+            - name: APP_VERSION
+              value: {{ .Values.api.image.tag | quote }}
+            - name: HEALTH_FAIL
+              value: {{ .Values.api.healthFail | quote }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-api
+  labels:
+    app: shop-api
+spec:
+  selector:
+      app: shop-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: shop-api
+spec:
+  selector:
+    matchLabels:
+      app: shop-api
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: shop-alerts
+spec:
+  groups:
+    - name: shop
+      rules:
+        - alert: ShopApiDown
+          expr: absent(up{job="shop-api"} == 1)
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Ни один под api не отвечает"
+            description: "Prometheus не видит ни одного живого api больше минуты."
+        - alert: ShopOrderBacklog
+          expr: shop_orders_pending > 5 or absent(up{job="shop/shop-worker"} == 1)
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Заказы накапливаются без обработки!"
+            description: "Worker не справляется или не работает!"
+        - alert: ShopDatabaseDown
+          expr: shop_api_db_up == 0
+          for: 30s
+          labels:
+            severity: critical
+          annotations:
+            summary: "API потерял связь с базой данных"
+            description: "Отказала база данных или затянулся failover"

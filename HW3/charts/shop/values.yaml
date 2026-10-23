@@ -1,0 +1,18 @@
+api:
+  replicas: 3
+  image:
+    repository: registry.local/shop-api
+    tag: "0.1.0"
+  healthFail: false
+worker:
+  replicas: 2
+  image:
+    repository: registry.local/shop-worker
+    tag: "0.1.0"
+  healthFail: false
+db:
+  instances: 2
+  storageSize: 1Gi
+  requests:
+    memory: 512Mi
+  imageName: registry.local/postgresql:18.6-system-trixie
