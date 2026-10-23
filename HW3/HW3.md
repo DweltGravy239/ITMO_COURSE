@@ -129,4 +129,27 @@ controller-manager это встроенная часть кубера. Он с�
 Применим изменения:
 <img width="2864" height="1376" alt="image" src="https://github.com/user-attachments/assets/56f59d45-5666-4a4a-b38b-d2b199543ed9" />
 Изменим уже существующие values и пропишем мониторинг:
+<img width="726" height="287" alt="image" src="https://github.com/user-attachments/assets/1c7e9575-3e26-4f2c-9525-6aaa3b8174c9" />
+<img width="562" height="295" alt="image" src="https://github.com/user-attachments/assets/be46ad28-d569-489f-be86-813d2e5941c9" />
+Применим изменения:
+<img width="1056" height="648" alt="image" src="https://github.com/user-attachments/assets/4d3b1bf8-b018-4d6e-83c5-910b0d1a7922" />
+Проверим, что прометеус видит цели:
+<img width="2544" height="909" alt="image" src="https://github.com/user-attachments/assets/3b8f6645-7f0c-41c1-9420-5671343dd631" />
+Теперь напишем алерты:
+<img width="884" height="668" alt="image" src="https://github.com/user-attachments/assets/35e44584-8995-4aaa-9e93-7ea174383a09" />
+Применим изменения:
+<img width="1005" height="305" alt="image" src="https://github.com/user-attachments/assets/5fc2e508-cfa2-4f8c-8723-2cfb08323702" />
+Теперь попробуем спровоцировать события:
+Убьем ноды и проверим, что все отрабатывает корректно:
+<img width="2399" height="452" alt="image" src="https://github.com/user-attachments/assets/e574bc32-e604-4b98-b01b-78ea83998ebe" />
+Теперь проверим алерт с очередями на наших воркерах:
+<img width="2541" height="1214" alt="image" src="https://github.com/user-attachments/assets/9c3a38ea-c217-450d-b6d8-9a2325605016" />
+Вернем в работу и проверим, что очередь рассосалась:
+<img width="1253" height="323" alt="image" src="https://github.com/user-attachments/assets/4f0d6be7-7368-4910-b21f-917137f49e0e" />
+Теперь устроим контролируемую неисправность и проверим, что наши алерты отрабатывают корректно:
+<img width="2537" height="372" alt="image" src="https://github.com/user-attachments/assets/22c76620-c4d7-4972-b835-43478bdc5005" />
+Теперь восстановим и проверим, что все отрабатывает корректно:
+<img width="1250" height="221" alt="image" src="https://github.com/user-attachments/assets/1ec08d79-aba8-4929-ab32-9cdd81a415c3" />
+Финально проверяем, что все поднялось:
+<img width="1619" height="1255" alt="image" src="https://github.com/user-attachments/assets/eb636770-98d8-4ebc-965d-13a43b81a0dc" />
 
