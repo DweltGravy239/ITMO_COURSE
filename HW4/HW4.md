@@ -20,6 +20,27 @@
 <img width="1489" height="1354" alt="image" src="https://github.com/user-attachments/assets/b9437395-678e-4cb9-9153-6bf8f6045771" />
 Теперь установим сам мониторинг: 
 <img width="2826" height="1444" alt="image" src="https://github.com/user-attachments/assets/58126c4f-2182-44dc-9eb4-0cff78e9cea2" />
+Часть 0 — Сервис batch
+Сгенерируем сервис и пропишем его в каталоге:
+<img width="1598" height="1376" alt="image" src="https://github.com/user-attachments/assets/7b8b9dda-70e1-4799-9cf4-519de5f449c8" />
+Соберем докерфайл и сбилдим его:
+<img width="2857" height="1178" alt="image" src="https://github.com/user-attachments/assets/aa663754-a594-4dce-b101-109cf005db90" />
+Теперь проверим, что образ корректно запускается:
+<img width="2466" height="473" alt="image" src="https://github.com/user-attachments/assets/15c444f5-c297-4b69-960d-2387cf06630f" />
+Загрузим образ:
+<img width="2870" height="237" alt="image" src="https://github.com/user-attachments/assets/1ed52ab2-db82-4413-8095-0902318610b1" />
+
+Часть 1 — Выбери механизм разнесения
+Часть 2 — Тесная площадка
+Часть 3 — Реальные числа вместо угадывания
+Часть 4 — Разнеси критический сервис
+Часть 5 — Приоритеты и гарантии
+Часть 6 — Создай нехватку, поймай preemption
+Часть 7 — Давление по памяти, порядок жертв
+Часть 8 — Докажи SLA под нагрузкой
+Часть 9 — Мониторинг
+
+
 Теперь осталось поставить само наше приложение из лабораторной работы 2:
 <img width="1466" height="562" alt="image" src="https://github.com/user-attachments/assets/cd454029-76fd-490e-84c4-34bd5783f3e6" />
 Проверим, что база поднялась:
