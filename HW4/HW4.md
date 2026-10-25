@@ -29,9 +29,18 @@
 <img width="2466" height="473" alt="image" src="https://github.com/user-attachments/assets/15c444f5-c297-4b69-960d-2387cf06630f" />
 Загрузим образ:
 <img width="2870" height="237" alt="image" src="https://github.com/user-attachments/assets/1ed52ab2-db82-4413-8095-0902318610b1" />
-
 Часть 1 — Выбери механизм разнесения
+В качестве параметра разъяснения выберем вариант topologySpreadConstraints, т.к. при использование podAntiAffinity и при обновление деплоймента не получится создавать временный под, для того чтоб бесшовно провести обновление. Правило topologySpreadConstraints с maxSkew 1 и DoNotSchedule допускает только раскладки 2+1 и 1+2 и запрещает 3+0, поэтому при потере любой из двух нод минимум одна реплика api остаётся работать. podAntiAffinity не подходит, потому что он не гарантирует расселение и из-за этого может все поды положить на одну ноду. 
+Скорректируем values.yaml:
+<img width="1206" height="874" alt="image" src="https://github.com/user-attachments/assets/a8a272f1-c783-49f6-a6b9-177b2532a4c3" />
 Часть 2 — Тесная площадка
+Откроем values и добавим раздел с batch:
+<img width="1038" height="1282" alt="image" src="https://github.com/user-attachments/assets/4de9ef1f-b232-47bf-bb09-90678ad63556" />
+Теперь сделаем шаблон shop-banch и проверим, что ошибок у нас нету:
+<img width="1430" height="1434" alt="image" src="https://github.com/user-attachments/assets/1cf22438-63ce-4ec0-a404-a3d8d76b0d15" />
+Применим наш хелм:
+<img width="2364" height="736" alt="image" src="https://github.com/user-attachments/assets/940a33f7-3b54-437a-bf62-a380becd6d31" />
+
 Часть 3 — Реальные числа вместо угадывания
 Часть 4 — Разнеси критический сервис
 Часть 5 — Приоритеты и гарантии
