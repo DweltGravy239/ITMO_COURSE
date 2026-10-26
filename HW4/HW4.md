@@ -40,9 +40,39 @@
 <img width="1430" height="1434" alt="image" src="https://github.com/user-attachments/assets/1cf22438-63ce-4ec0-a404-a3d8d76b0d15" />
 Применим наш хелм:
 <img width="2364" height="736" alt="image" src="https://github.com/user-attachments/assets/940a33f7-3b54-437a-bf62-a380becd6d31" />
-
 Часть 3 — Реальные числа вместо угадывания
+Перед прогоном я бы выставил лимиты такие:
+- api - cpu 1 - memory 128Mi - limits - cpu 1 - memory 128Mi
+- worker - cpu 1 - memory 200Mi - limits - cpu 1.5 - memory 260Mi
+- postgres - cpu 1 - memory 512Mi - limits - cpu 1 - memory 512Mi
+Теперь прогоним наш hey в течении 20 минут:
+<img width="2836" height="362" alt="image" src="https://github.com/user-attachments/assets/b803cc9e-2cdf-4e71-a378-77f8b32e8ff2" />
+Пока у нас работает hey, мы успеем поставить krr:
+<img width="1542" height="834" alt="image" src="https://github.com/user-attachments/assets/dc499c5b-ab25-46ed-85d2-c40b9483e114" />
+Посмотрит итоговую сводку hey:
+<img width="718" height="1160" alt="image" src="https://github.com/user-attachments/assets/c22ef6bf-dde6-414b-9368-b693a0438eb0" />
+Так как у нас база данных разворачивается через оператора, krr не сможет брать оттуда метрики, поэтому мы сделаем так, чтоб он брал через прометеус. Для этого проверим, есть ли вообще эти метрики в нем:
+<img width="2758" height="178" alt="image" src="https://github.com/user-attachments/assets/40f95183-0e26-427f-a9d6-1582439e617a" />
+Запустим krr и обратимся к прометеус, для того чтоб понять нагрузку на поды:
+<img width="1146" height="1050" alt="image" src="https://github.com/user-attachments/assets/d5ad5c37-0e53-4706-b08b-3543427a04e3" />
+Как мы видим, с использованием krr и информации из prometheus мы видим, что значения:
+- api - cpu 73m - memory 20Mi - limits - cpu не задан - memory 20Mi
+- worker - cpu 10m - memory 20Mi - limits - cpu не задан - memory 20Mi
+- postgres - cpu 180m - memory - 127Mi - cpu не задан - memory 127Mi
+Теперь внесем информацию в наш values.yaml:
+<img width="646" height="1038" alt="image" src="https://github.com/user-attachments/assets/35a8d700-119d-4bcc-b55a-3d02f21ed3b1" />
+Теперь добавим указанную информацию в темплейтс:
+<img width="1546" height="1122" alt="image" src="https://github.com/user-attachments/assets/659630cc-b7b4-4253-aaf9-e83a11472d81" />
+Применим изменения:
+<img width="1704" height="310" alt="image" src="https://github.com/user-attachments/assets/05cd64c2-1dc3-4604-9499-e6f7e50102b7" />
+Проверим, что все поды у нас живут:
+<img width="1034" height="308" alt="image" src="https://github.com/user-attachments/assets/03c45dbd-fabf-4719-b90b-e1edd891ecbb" />
 Часть 4 — Разнеси критический сервис
+Обновим наш манифест, который добавляет выбранну методику из части 1:
+<img width="1216" height="802" alt="image" src="https://github.com/user-attachments/assets/e50f05f6-6ca5-4844-9619-2492d868f25d" />
+Применим изменения:
+<img width="1936" height="496" alt="image" src="https://github.com/user-attachments/assets/5dcf60a2-ae80-47a3-bf05-216209601d0e" />
+
 Часть 5 — Приоритеты и гарантии
 Часть 6 — Создай нехватку, поймай preemption
 Часть 7 — Давление по памяти, порядок жертв
