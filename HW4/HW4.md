@@ -82,7 +82,10 @@ batch - cpu: 100 - memory: как было (для того чтоб защит�
 <img width="904" height="1422" alt="image" src="https://github.com/user-attachments/assets/80893585-41fe-4897-a6b8-1b633bff6a85" />
 Добавим блок pdb в values и в манифесты:
 <img width="2094" height="486" alt="image" src="https://github.com/user-attachments/assets/1a151102-540e-42c1-9b01-b02949286e89" />
-
+Обновим хелм:
+<img width="2066" height="366" alt="image" src="https://github.com/user-attachments/assets/a60374d6-2b67-453d-bcc6-56d929986809" />
+Проверим, что все отрабатывает корректно:
+<img width="1578" height="780" alt="image" src="https://github.com/user-attachments/assets/e1b74c95-20da-405e-8891-41282510394b" />
 
 
 Часть 6 — Создай нехватку, поймай preemption
