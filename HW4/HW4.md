@@ -125,5 +125,50 @@ batch - cpu: 100 - memory: как было (для того чтоб защит�
 Осталось вернуть все на прежние места и применить изменения:
 <img width="1938" height="678" alt="image" src="https://github.com/user-attachments/assets/9b54ab73-0090-47a5-96e1-62746095d22d" />
 Часть 7 — Давление по памяти, порядок жертв
+Для начала посмотрим, что кубелет считает доступной памяти на каждой из нод:
+<img width="1752" height="576" alt="image" src="https://github.com/user-attachments/assets/12ecc0e1-9e05-4dba-9c3f-c597ea4dbe61" />
+Теперь добавим порог в конфиг кубелета и проверим результаты
+<img width="1820" height="242" alt="image" src="https://github.com/user-attachments/assets/183e1a6a-c440-498b-bb24-35c29143dc7a" />
+Теперь внесем изменения на другой же ноде:
+<img width="1878" height="252" alt="image" src="https://github.com/user-attachments/assets/5c93dea2-ae65-4035-9a1b-3a1efc4d2260" />
+Теперь перезагрузим кубелет для того чтоб конфиг прихватился:
+<img width="1578" height="320" alt="image" src="https://github.com/user-attachments/assets/8ae5d0e0-786d-4840-8d7f-a38bc207f0e4" />
+Теперь выполним на следующей ноде:
+<img width="1728" height="254" alt="image" src="https://github.com/user-attachments/assets/5fb3d683-2b7f-4d90-b6f5-893cbda00174" />
+Для того чтоб у нас начались вытеснения, нам необходимо поменять values в блоке batch:
+<img width="594" height="374" alt="image" src="https://github.com/user-attachments/assets/c81e0a96-a47c-4fc0-8a2f-ed71d2240a87" />
+Проверим возможность применения изменений:
+<img width="2840" height="1164" alt="image" src="https://github.com/user-attachments/assets/45ecc287-e407-43e1-925c-497cb7c70006" />
+Как мы видим, на sla-worker стало меньше порога, поэтому kubelet выставил MemoryPressure=True и начал вытеснять поды batch. Он начал вытеснять их, из-за того что их приоритет равен отрицательному значению и они являются главной цели при возможной нехватки места.
+Теперь посмотрим состояние пода:
+<img width="1890" height="106" alt="image" src="https://github.com/user-attachments/assets/0d6237bd-94e8-432f-8b5c-830e5eae12ee" />
+Мы видим, что у ноды MemoryPressure стоит True с причиной KubeletHasInsufficientMemory, это значит, что под давлением на эту ноду больше не садятся другие поды.
+Теперь вернем все значения на прежние:
+<img width="526" height="336" alt="image" src="https://github.com/user-attachments/assets/19751a48-a34f-4ed3-bba3-80d77afb961c" />
+Применим изменения:
+<img width="1434" height="226" alt="image" src="https://github.com/user-attachments/assets/38f38736-4404-457e-ad86-9e44dfc0e572" />
+Уберем следы вытеснения:
+<img width="1072" height="356" alt="image" src="https://github.com/user-attachments/assets/536a7246-7422-4ec6-856e-8a0c6dfa3f78" />
+Проверим, что все нормально и давление снято:
+<img width="1864" height="426" alt="image" src="https://github.com/user-attachments/assets/f42c4122-8ac5-4a76-a00b-5164e2bb106c" />
 Часть 8 — Докажи SLA под нагрузкой
+Для того чтоб сформировать SLA, нужно прогнать еще раз нагрузку через hey и посмотреть результаты:
+<img width="674" height="1092" alt="image" src="https://github.com/user-attachments/assets/d5e2dbae-148e-4206-a7ae-284a599b0956" />
+По метрикам для формирования SLA, нужно обратить внимание на p95 (строка Latency distribution) и долю успешных ответов (поле Status code distribution).
+Теперь нужно построить график в prometheus, для того чтоб это сделать, нам нужно понять, какие переменные брать, для этого выведем все переменные и выберем нужную:
+<img width="2400" height="1176" alt="image" src="https://github.com/user-attachments/assets/86c9a4c7-e7ab-4951-8d17-cf4134bbc4aa" />
+Теперь построим график в прометеус:
+<img width="878" height="382" alt="image" src="https://github.com/user-attachments/assets/24b22846-7b03-4547-8e9b-bb9a965bb797" />
+На графике видно, что что во время вытеснения batch критический путь отвечал стабильно, и значение p95 составляло 0.159. Единственный скачок был во время helm upgrade. По нему мы можем понять, что наш SLA соблюдается. А SLA формируем вот так: "за любое 30-минутное окно 95% запросов POST /order выполняются быстрее 300 мс и не менее 99.9% ответов успешны". Если опираться на наш SLA, то у нас все соблюдается, т.к. при p95 = 159мс у нас 100 процентов успешных ответов
+Теперь построим график доли успеха:
+<img width="1710" height="1244" alt="image" src="https://github.com/user-attachments/assets/cb6d89f2-80ad-49e6-b77d-aac49315eebc" />
+Как мы видим, наш график прямо сопоставим с словами выше. Так как у нас доля успешных запросов равна 100 процентов, то и весь график держится на единице. 
 Часть 9 — Мониторинг
+Мы будем собирать определенные алерты. Эти алерты:
+- p95 выше порога, который мы определили в SLA и он держится несколько минут.
+- доступных реплик shop-api стало меньше 2
+- memorypressure равен true. Это предвестник того, что скоро kubelet начнет вытеснять поды.
+Для этого мы добавим новые параметры в values:
+<img width="2334" height="966" alt="image" src="https://github.com/user-attachments/assets/4efbb591-dc2b-4317-8737-69ea2a3d62e1" />
+Обновим наш хелм:
+<img width="1902" height="362" alt="image" src="https://github.com/user-attachments/assets/90c83493-58a6-4a4d-af32-8a819d040ad9" />
