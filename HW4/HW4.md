@@ -72,8 +72,19 @@
 <img width="1216" height="802" alt="image" src="https://github.com/user-attachments/assets/e50f05f6-6ca5-4844-9619-2492d868f25d" />
 Применим изменения:
 <img width="1936" height="496" alt="image" src="https://github.com/user-attachments/assets/5dcf60a2-ae80-47a3-bf05-216209601d0e" />
-
 Часть 5 — Приоритеты и гарантии
+Для того чтоб статус QoS был Guaranteed нам нужно, чтоб limits и requests были равны.
+Значения, который я выставил:
+api - cpu: 200 - memory: 64 (повысил лимиты и request для того, чтоб был запас и был запас по потреблению)
+postgres - cpu: 400 - memory: 256 (также повысил лимиты по причине выше)
+batch - cpu: 100 - memory: как было (для того чтоб защитить api, т.к. batch получит статус "Burstable" и будет не в приоритете)
+Теперь добавим priorityClass в наш values и напишем манифест:
+<img width="904" height="1422" alt="image" src="https://github.com/user-attachments/assets/80893585-41fe-4897-a6b8-1b633bff6a85" />
+Добавим блок pdb в values и в манифесты:
+<img width="2094" height="486" alt="image" src="https://github.com/user-attachments/assets/1a151102-540e-42c1-9b01-b02949286e89" />
+
+
+
 Часть 6 — Создай нехватку, поймай preemption
 Часть 7 — Давление по памяти, порядок жертв
 Часть 8 — Докажи SLA под нагрузкой
