@@ -20,6 +20,12 @@
 <img width="1489" height="1354" alt="image" src="https://github.com/user-attachments/assets/b9437395-678e-4cb9-9153-6bf8f6045771" />
 Теперь установим сам мониторинг: 
 <img width="2826" height="1444" alt="image" src="https://github.com/user-attachments/assets/58126c4f-2182-44dc-9eb4-0cff78e9cea2" />
+Теперь осталось поставить само наше приложение из лабораторной работы 2:
+<img width="1466" height="562" alt="image" src="https://github.com/user-attachments/assets/cd454029-76fd-490e-84c4-34bd5783f3e6" />
+Проверим, что база поднялась:
+<img width="1615" height="436" alt="image" src="https://github.com/user-attachments/assets/dfbe6d8f-b527-4128-b377-4344c3a492bf" />
+Проверим, что все отрабатывает корректно:
+<img width="2796" height="359" alt="image" src="https://github.com/user-attachments/assets/224478da-e1b2-437b-b542-d07fb4cd20b9" />
 Часть 0 — Сервис batch
 Сгенерируем сервис и пропишем его в каталоге:
 <img width="1598" height="1376" alt="image" src="https://github.com/user-attachments/assets/7b8b9dda-70e1-4799-9cf4-519de5f449c8" />
@@ -86,17 +92,38 @@ batch - cpu: 100 - memory: как было (для того чтоб защит�
 <img width="2066" height="366" alt="image" src="https://github.com/user-attachments/assets/a60374d6-2b67-453d-bcc6-56d929986809" />
 Проверим, что все отрабатывает корректно:
 <img width="1578" height="780" alt="image" src="https://github.com/user-attachments/assets/e1b74c95-20da-405e-8891-41282510394b" />
-
-
 Часть 6 — Создай нехватку, поймай preemption
+Для начала узнаем, сколько планировщик считает свободным местом на нодах:
+<img width="2004" height="904" alt="image" src="https://github.com/user-attachments/assets/539a9245-064b-43f6-a526-369b9a886579" />
+Для того чтоб словить ошибку мы заложим больше ресурсов, чем нужно. Это мы сделаем повышением числа реплик на shop-branch:
+<img width="792" height="502" alt="image" src="https://github.com/user-attachments/assets/c29135a2-8751-46f0-85e3-8a08e1b94011" />
+Применим изменения и проверим результат:
+<img width="2410" height="1184" alt="image" src="https://github.com/user-attachments/assets/5fd8513d-1191-4d47-a3b4-740702c9ffab" />
+Как мы видим, все поды поднялись и в лимиты мы не ушли, поэтому поднимаем количество репликаций до 14 и применим изменения:
+<img width="2372" height="922" alt="image" src="https://github.com/user-attachments/assets/30f07450-590c-4d4a-a71e-78e72e7b6f11" />
+Посмотрим лог пода для того чтоб подтвердить причину:
+<img width="2874" height="460" alt="image" src="https://github.com/user-attachments/assets/ee1a7a35-4010-466b-ad45-6937b90d474b" />
+Теперь посмотрим на занятые ресурсы на нодах и проверим, что значения изменились:
+<img width="2048" height="884" alt="image" src="https://github.com/user-attachments/assets/02db78ad-7328-4619-b4b8-e78d89025ad0" />
+Теперь проверим, что на самом деле CPU пойти свободен и планировщик берет ресурсы из requests, а не из фактического потребления:
+<img width="1406" height="278" alt="image" src="https://github.com/user-attachments/assets/7ac6330e-d9a7-4e08-8cda-1a1284f62538" />
+Следующим шагом попробуем увеличить число критичных подов (api) и посмотрим, как он должен будет вывести ненужные поды branch:
+<img width="772" height="470" alt="image" src="https://github.com/user-attachments/assets/77347957-6504-4fc7-8d84-37836dd62339" />
+Когда мы проверяли, мы столкнулись с интересным событием. После переполнения ресурсов вывели не branch, как мы ожидали, а kiverno. Это все из-за того, что мы там не выставляли приоритеты и там был 0, а на branch 100.
+<img width="1668" height="344" alt="image" src="https://github.com/user-attachments/assets/02f27cf7-33e5-495d-a046-1616e04d4faf" />
+Попробуем уменьшить число репликаций с 14 до 10 и проверить, восстановится ли кто-то:
+<img width="1696" height="510" alt="image" src="https://github.com/user-attachments/assets/c37b78a9-e44a-4f64-935b-4961e87881ec" />
+Для того чтоб у нас точно выводился branch мы им дадим отрицательный приоритет:
+<img width="568" height="264" alt="image" src="https://github.com/user-attachments/assets/1a38398a-19f6-4785-8505-d67187457488" />
+Применим изменения и проверим, что все применилось:
+<img width="2606" height="976" alt="image" src="https://github.com/user-attachments/assets/8133a33a-3924-4a6f-b782-044ed8bd2f13" />
+Снова забиваем кластер и поднимаем число репликаций до 14:
+<img width="2136" height="662" alt="image" src="https://github.com/user-attachments/assets/a2fa1de5-e0a9-48a6-9fd3-d7db5fe68653" />
+Теперь пробуем поднять число подов для api и проверить, что начнут умирать поды brench:
+<img width="2846" height="1396" alt="image" src="https://github.com/user-attachments/assets/d5fc2d65-4d88-47bc-87a8-00de2007eb7d" />
+Как мы видим, мы поймали именно то, что хотели.
+Осталось вернуть все на прежние места и применить изменения:
+<img width="1938" height="678" alt="image" src="https://github.com/user-attachments/assets/9b54ab73-0090-47a5-96e1-62746095d22d" />
 Часть 7 — Давление по памяти, порядок жертв
 Часть 8 — Докажи SLA под нагрузкой
 Часть 9 — Мониторинг
-
-
-Теперь осталось поставить само наше приложение из лабораторной работы 2:
-<img width="1466" height="562" alt="image" src="https://github.com/user-attachments/assets/cd454029-76fd-490e-84c4-34bd5783f3e6" />
-Проверим, что база поднялась:
-<img width="1615" height="436" alt="image" src="https://github.com/user-attachments/assets/dfbe6d8f-b527-4128-b377-4344c3a492bf" />
-Проверим, что все отрабатывает корректно:
-<img width="2796" height="359" alt="image" src="https://github.com/user-attachments/assets/224478da-e1b2-437b-b542-d07fb4cd20b9" />
