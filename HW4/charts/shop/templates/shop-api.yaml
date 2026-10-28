@@ -1,0 +1,147 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-api
+  labels:
+    app: shop-api
+    owner: team-a
+spec:
+  selector:
+    matchLabels:
+      app: shop-api
+  replicas: {{ .Values.api.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: shop-api
+        owner: team-a
+    spec:
+      priorityClassName: {{ .Values.priorityClasses.critical.name }}
+      {{- if eq .Values.api.spread.mechanism "topologySpread" }}
+      topologySpreadConstraints:
+        - maxSkew: {{ .Values.api.spread.maxSkew }}
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: shop-api
+      {{- else if eq .Values.api.spread.mechanism "podAntiAffinity" }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: shop-api
+      {{- end }}
+      containers:
+        - name: myapp
+          image: {{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+          resources:
+            {{- toYaml .Values.api.resources | nindent 12 }} 
+          ports:
+            - name: standard
+              containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: shop-db-app
+                  key: uri
+            - name: PORT
+              value: "8080"
+            - name: APP_VERSION
+              value: {{ .Values.api.image.tag | quote }}
+            - name: HEALTH_FAIL
+              value: {{ .Values.api.healthFail | quote }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-api
+  labels:
+    app: shop-api
+spec:
+  selector:
+      app: shop-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: shop-api
+spec:
+  selector:
+    matchLabels:
+      app: shop-api
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: shop-alerts
+spec:
+  groups:
+    - name: shop
+      rules:
+        - alert: ShopOrderLatencyHigh
+          expr: histogram_quantile(0.95, sum by (le) (rate(shop_api_http_request_duration_seconds_bucket{path="/order"}[1m]))) > 0.4
+          for: 3m
+          labels:
+            severity: critical
+          annotations:
+            summary: "p95 выше порога! SLA не соблюдается"
+            description: "Мы не выполняем требования перед клиентами. Необходимо понизить значение p95"
+        - alert: ShopApiReplicasLow
+          expr: kube_deployment_status_replicas_available{namespace="shop", deployment="shop-api"} < 2
+          for: 30s
+          labels:
+            severity: critical
+          annotations:
+            summary: "Доступных реплик shop-api меньше чем 2!"
+            description: "Количество подов shop-api упало меньше 2. Запас потерян"
+        - alert: NodeMemoryPressure
+          expr: kube_node_status_condition{condition="MemoryPressure", status="true"} == 1
+          for: 30s
+          labels:
+            severity: critical
+          annotations:
+            summary: "Значение переменной MemoryPressure равно true"
+            description: "MemoryPressure равно true. Нода вашла в режим вытеснения подов"
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: shop-api
+spec:
+  minAvailable: {{ .Values.api.pdb.minAvailable }}
+  selector:
+    matchLabels:
+      app: shop-api

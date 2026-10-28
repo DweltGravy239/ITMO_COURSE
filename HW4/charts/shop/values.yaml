@@ -1,0 +1,62 @@
+api:
+  replicas: 3
+  image:
+    repository: registry.local/shop-api
+    tag: "0.1.0"
+  healthFail: false
+  spread:
+    mechanism: topologySpread
+    maxSkew: 1
+  resources:
+    requests:
+      cpu: 200m
+      memory: 64Mi
+    limits:
+      memory: 64Mi
+      cpu: 200m
+  pdb:
+    minAvailable: 2 
+worker:
+  replicas: 2
+  image:
+    repository: registry.local/shop-worker
+    tag: "0.1.0"
+  healthFail: false
+  resources:
+    requests:
+      cpu: 10m
+      memory: 20Mi
+    limits:
+      memory: 20Mi
+batch:
+  replicas: 6
+  image:
+    repository: registry.local/shop-batch
+    tag: "0.1.0"
+  cpuWorkers: 0
+  memMB: 64
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 70Mi
+    limits:
+      cpu: 2
+      memory: 200Mi
+db:
+  instances: 2
+  storageSize: 1Gi
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 400m
+    limits:
+      memory: 256Mi
+      cpu: 400m
+  imageName: registry.local/postgresql:18.6-system-trixie
+priorityClasses:
+  critical:
+    name: shop-critical
+    value: 1000000
+  batch:
+    name: shop-batch-bg
+    value: -100

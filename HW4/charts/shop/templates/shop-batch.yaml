@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-batch
+  labels:
+    app: shop-batch
+    owner: team-a
+spec:
+  replicas: {{ .Values.batch.replicas }}
+  selector:
+    matchLabels:
+      app: shop-batch
+  template:
+    metadata:
+      labels:
+        app: shop-batch
+        owner: team-a
+    spec:
+      priorityClassName: {{ .Values.priorityClasses.batch.name }}
+      containers:
+        - name: batch
+          image: {{ .Values.batch.image.repository }}:{{ .Values.batch.image.tag }}
+          env:
+            - name: CPU_WORKERS
+              value: "{{ .Values.batch.cpuWorkers }}"
+            - name: MEM_MB
+              value: "{{ .Values.batch.memMB }}"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+          resources:
+            requests:
+              cpu: {{ .Values.batch.resources.requests.cpu }}
+              memory: {{ .Values.batch.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.batch.resources.limits.cpu }}
+              memory: {{ .Values.batch.resources.limits.memory }}

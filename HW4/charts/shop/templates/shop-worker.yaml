@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-worker
+  labels:
+    app: shop-worker
+    owner: team-a
+spec:
+  selector:
+    matchLabels:
+      app: shop-worker
+  replicas: {{ .Values.worker.replicas }}
+  template:
+    metadata:
+      labels:
+        app: shop-worker
+        owner: team-a
+    spec:
+      priorityClassName: {{ .Values.priorityClasses.critical.name }}
+      containers:
+        - name: myapp
+          image: {{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+          ports:
+            - name: standard
+              containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: shop-db-app
+                  key: uri
+            - name: PORT
+              value: "8080"
+            - name: APP_VERSION
+              value: {{ .Values.worker.image.tag | quote }}
+            - name: HEALTH_FAIL
+              value: {{ .Values.worker.healthFail | quote }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: shop-worker
+spec:
+  selector:
+    matchLabels:
+      app: shop-worker
+  podMetricsEndpoints:
+    - port: standard
+      path: /metrics
+      interval: 15s

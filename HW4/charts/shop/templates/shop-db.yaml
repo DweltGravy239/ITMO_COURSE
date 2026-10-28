@@ -1,0 +1,20 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: shop-db
+  labels:
+    app: shop-db
+    owner: team-a
+spec:
+  priorityClassName: {{ .Values.priorityClasses.critical.name }}
+  instances: {{ .Values.db.instances }}
+  storage:
+    size: {{ .Values.db.storageSize }}
+  inheritedMetadata:
+    labels:
+      app: shop-db
+      owner: team-a
+  resources:
+    {{- toYaml .Values.db.resources | nindent 12 }}
+  imageName: {{ .Values.db.imageName }}
+
