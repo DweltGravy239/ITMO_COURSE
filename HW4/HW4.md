@@ -172,3 +172,16 @@ batch - cpu: 100 - memory: как было (для того чтоб защит�
 <img width="2334" height="966" alt="image" src="https://github.com/user-attachments/assets/4efbb591-dc2b-4317-8737-69ea2a3d62e1" />
 Обновим наш хелм:
 <img width="1902" height="362" alt="image" src="https://github.com/user-attachments/assets/90c83493-58a6-4a4d-af32-8a819d040ad9" />
+Проверим, что в прометеусе все подхватилось и мы видим наши алерты:
+<img width="1568" height="389" alt="image" src="https://github.com/user-attachments/assets/5599b161-79ba-4296-81fa-fea1703070b8" />
+Теперь попробуем спровоцировать алерты:
+Для этого уберем количество репликаций до 1 штуки в shop-api:
+<img width="1482" height="86" alt="image" src="https://github.com/user-attachments/assets/ceb9397c-9d71-416a-8fb9-f6e44a27a9e8" />
+Проверим результат:
+<img width="2848" height="506" alt="image" src="https://github.com/user-attachments/assets/3b383a9a-b367-4220-a83c-b11fae6f7716" />
+Теперь вернем значение:
+<img width="1526" height="188" alt="image" src="https://github.com/user-attachments/assets/f77930d1-2346-455a-a887-52a87e81f1b4" />
+Проверим результат:
+<img width="2498" height="998" alt="image" src="https://github.com/user-attachments/assets/1125ef78-38f5-4c80-a894-e914b53ff848" />
+Теперь сделаем график:
+<img width="2250" height="1114" alt="image" src="https://github.com/user-attachments/assets/702fbd80-416b-4b6a-81bb-c06eeb6ad5da" />
