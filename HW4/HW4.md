@@ -363,3 +363,12 @@
 Теперь сделаем график:
 
 <img width="2250" height="1114" alt="image" src="https://github.com/user-attachments/assets/702fbd80-416b-4b6a-81bb-c06eeb6ad5da" />
+
+Осталось внести информацию о дашборде в наш хелм и проверить изменения:
+
+<img width="1936" height="900" alt="image" src="https://github.com/user-attachments/assets/a99dfe61-d821-4b10-9851-3372c7831df8" />
+
+Проверим, что дашборд сразу же подтянится:
+
+<img width="2330" height="1334" alt="image" src="https://github.com/user-attachments/assets/595d8fea-c2f8-4ace-8217-d319e23579ac" />
+
